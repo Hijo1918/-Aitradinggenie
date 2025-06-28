@@ -1,0 +1,4 @@
+cd frontend
+npm install
+npm run build
+# Deploy the build/ directory to your web server or service
