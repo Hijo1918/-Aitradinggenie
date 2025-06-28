@@ -1,0 +1,4 @@
+cd backend
+cp .env.example .env # Edit this with your production values
+npm install
+npm start
