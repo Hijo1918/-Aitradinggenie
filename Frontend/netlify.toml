@@ -7,3 +7,5 @@
   function = "hello"
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+[build.environment]
+  NODE_VERSION = "20.12.2"
