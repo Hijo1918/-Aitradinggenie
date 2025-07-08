@@ -9,3 +9,12 @@ create table trades (
   confidence numeric,
   created_at timestamptz default now()
 );
+alter table trades enable row level security;
+
+create policy "User can read own trades"
+  on trades for select
+  using (auth.uid() = user_id);
+
+create policy "User can insert trades"
+  on trades for insert
+  with check (auth.uid() = user_id);
