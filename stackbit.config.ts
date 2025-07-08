@@ -1,23 +1,24 @@
 // stackbit.config.ts
-import { defineStackbitConfig } from "@stackbit/types";
-import { GitContentSource } from "@stackbit/cms-git";
+import {
+  defineStackbitConfig,
+  getLocalizedFieldForLocale,
+  SiteMapEntry
+} from "@stackbit/types";
 
 export default defineStackbitConfig({
-  // ...
-  contentSources: [
-    new GitContentSource({
-      rootPath: __dirname,
-      contentDirs: ["content"],
-      models: [
-        {
-          name: "Page",
-          // Define the model as a page model
-          type: "page",
-          urlPath: "/{slug}",
-          filePath: "content/pages/{slug}.json",
-          fields: [{ name: "title", type: "string", required: true }]
-        }
-      ],
-    })
-  ]
+  stackbitVersion: "~0.6.0",
+  siteMap: ({ documents, models }) => {
+    const pageModels = models.filter(m => m.type === "page").map(m => m.name);
+    return documents
+      .filter(d => pageModels.includes(d.modelName))
+      .map(document => {
+        // ...
+        return {
+          document
+          // ...
+        };
+      })
+      .filter(Boolean) as SiteMapEntry[];
+  }
 });
+
