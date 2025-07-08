@@ -1,65 +1,122 @@
-# Aitradinggenie
+# AI Trading Genie
 
-Aitradinggenie is a full-stack crypto trading bot platform.  
-It automates trade execution, risk management, profit splitting (via smart contract), and BTC payouts.
-
----
+A professional cryptocurrency trading bot platform with AI-powered signals, automated risk management, and real-time analytics.
 
 ## Features
 
-- **Backend** (Node.js/Express/MongoDB):  
-  REST API for trade execution, trade history, admin BTC payout.  
-  Smart contract integration and risk management.
-- **Frontend** (React):  
-  Login, dashboard (signals, history, payouts), admin panel.  
-  Responsive, mobile-first.
-- **Smart Contract** (Solidity):  
-  Owner-only trade/profit functions, emits events for audit.
-- **Domain config**:  
-  Use `https://aitradinggenie.net` for frontend, `https://api.aitradinggenie.net` for backend.
+### 🤖 AI-Powered Trading
+- Advanced machine learning algorithms for market analysis
+- Real-time trading signals with confidence scores
+- Automated trade execution with customizable parameters
 
----
+### 📊 Comprehensive Analytics
+- Real-time profit & loss tracking
+- Performance metrics and risk analysis
+- Interactive charts and visualizations
 
-## Quickstart
+### 🛡️ Risk Management
+- Configurable stop-loss and take-profit levels
+- Position sizing based on risk tolerance
+- Portfolio-wide risk monitoring
 
-1. **Backend**
-   - Copy `.env.example` to `.env` and fill values.
-   - `cd backend && npm install && npm start`
+### 🔧 Professional Interface
+- Modern, responsive design
+- Real-time market data integration
+- Comprehensive settings and controls
 
-2. **Frontend**
-   - Set API URL in `.env`.
-   - `cd frontend && npm install && npm start`
+## Technology Stack
 
-3. **Contract**
-   - Deploy `Aitradinggenie.sol` (e.g. with Hardhat or Remix).
-   - Update backend `.env` with contract address and ABI.
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Charts**: Recharts for data visualization
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **Routing**: React Router
 
-4. **Visit**  
-   - Frontend: [https://aitradinggenie.net](https://aitradinggenie.net)  
-   - Backend API: [https://api.aitradinggenie.net](https://api.aitradinggenie.net)
+## Getting Started
 
----
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/ai-trading-genie.git
+   cd ai-trading-genie
+   ```
 
-## Directory Layout
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```
-/backend           # Node.js API server
-/frontend          # React frontend
-/smart-contract    # Solidity contracts
-```
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
----
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-## Deployment
+## Configuration
 
-- Set all secrets in `.env` files.
-- Configure CORS and API URLs for live domains.
-- Use Docker, Vercel, or Netlify as desired.
-- Set up MongoDB and Ethereum node (Infura/Alchemy).
-- Securely store your private keys.
+### API Settings
+Configure your exchange API credentials in the Settings page:
+- Binance, Coinbase Pro, Kraken, Bybit supported
+- Test mode available for safe development
+- Secure credential storage
 
----
+### Trading Parameters
+Customize your trading strategy:
+- Risk per trade (0.1% - 10%)
+- Stop loss and take profit levels
+- Maximum open positions
+- Auto-trading toggle
+
+### Risk Management
+Set up comprehensive risk controls:
+- Daily loss limits
+- Portfolio risk monitoring
+- Position size management
+- Drawdown protection
+
+## Security Features
+
+- Two-factor authentication support
+- API key restrictions
+- Session timeout controls
+- Security activity logging
+- Withdrawal confirmations
+
+## Demo Features
+
+The demo includes:
+- Simulated real-time price data
+- Mock trading signals
+- Sample trade history
+- Performance analytics
+- Risk metrics
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Disclaimer
+
+This software is for educational and demonstration purposes. Cryptocurrency trading involves substantial risk of loss. Always do your own research and never invest more than you can afford to lose.
+
+## Support
+
+For support and questions:
+- Create an issue on GitHub
+- Check the documentation
+- Join our community discussions
+
+---
+
+**⚠️ Important**: This is a demonstration platform. Do not use real API keys or funds without proper testing and understanding of the risks involved.

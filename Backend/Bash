@@ -1,3 +1,0 @@
-cd backend
-npm install prisma @prisma/client
-npx prisma init
