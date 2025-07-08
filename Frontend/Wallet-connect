@@ -1,0 +1,178 @@
+import { createClient } from 'npm:@supabase/supabase-js@2.39.7'
+import { ethers } from 'npm:ethers@6.10.0'
+
+// This function handles wallet connection requests for user profiles
+Deno.serve(async (req) => {
+  try {
+    // Only allow POST requests
+    if (req.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+        status: 405,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    // Parse the request body
+    const { action, message, signature, walletAddress } = await req.json()
+    
+    // Get authorization header for user authentication
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    // Initialize Supabase client with the user's auth token
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      {
+        global: {
+          headers: { Authorization: authHeader }
+        }
+      }
+    )
+
+    // Get the current user
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser()
+    if (userError || !user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    // Handle different wallet connection actions
+    switch (action) {
+      case 'connect':
+        // Verify the wallet address format
+        if (!walletAddress || !ethers.isAddress(walletAddress)) {
+          return new Response(JSON.stringify({ error: 'Invalid wallet address' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
+
+        // Update the user's profile with the wallet address
+        const { error: updateError } = await supabaseClient
+          .from('profiles')
+          .upsert({
+            id: user.id,
+            wallet_address: walletAddress,
+            updated_at: new Date().toISOString()
+          }, {
+            onConflict: 'id'
+          })
+
+        if (updateError) {
+          return new Response(JSON.stringify({ error: 'Failed to update profile', details: updateError }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
+
+        return new Response(JSON.stringify({ 
+          success: true, 
+          message: 'Wallet connected successfully',
+          walletAddress
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        })
+
+      case 'verify':
+        // Verify wallet ownership through signature
+        if (!message || !signature || !walletAddress) {
+          return new Response(JSON.stringify({ error: 'Missing verification parameters' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
+
+        try {
+          // Recover the address from the signature
+          const recoveredAddress = ethers.verifyMessage(message, signature)
+          
+          // Check if the recovered address matches the claimed wallet address
+          if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
+            return new Response(JSON.stringify({ error: 'Signature verification failed' }), {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' }
+            })
+          }
+
+          // Update the user's profile with the verified wallet address
+          const { error: verifyError } = await supabaseClient
+            .from('profiles')
+            .upsert({
+              id: user.id,
+              wallet_address: walletAddress,
+              wallet_verified: true,
+              updated_at: new Date().toISOString()
+            }, {
+              onConflict: 'id'
+            })
+
+          if (verifyError) {
+            return new Response(JSON.stringify({ error: 'Failed to update profile', details: verifyError }), {
+              status: 500,
+              headers: { 'Content-Type': 'application/json' }
+            })
+          }
+
+          return new Response(JSON.stringify({ 
+            success: true, 
+            message: 'Wallet verified successfully',
+            walletAddress
+          }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        } catch (error) {
+          return new Response(JSON.stringify({ error: 'Invalid signature', details: error.message }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
+
+      case 'disconnect':
+        // Remove wallet connection from profile
+        const { error: disconnectError } = await supabaseClient
+          .from('profiles')
+          .update({
+            wallet_address: null,
+            wallet_verified: false,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', user.id)
+
+        if (disconnectError) {
+          return new Response(JSON.stringify({ error: 'Failed to disconnect wallet', details: disconnectError }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
+
+        return new Response(JSON.stringify({ 
+          success: true, 
+          message: 'Wallet disconnected successfully' 
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        })
+
+      default:
+        return new Response(JSON.stringify({ error: 'Invalid action' }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        })
+    }
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Server error', details: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+})
