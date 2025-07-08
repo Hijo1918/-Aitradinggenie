@@ -1,0 +1,2 @@
+npm install -g supabase
+supabase init
