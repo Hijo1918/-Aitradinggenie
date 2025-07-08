@@ -5,3 +5,5 @@
 [[edge_functions]]
   path = "/hello"
   function = "hello"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
