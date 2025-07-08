@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "dist" # or .next, build, etc. depending on framework
+
+[[edge_functions]]
+  path = "/hello"
+  function = "hello"
