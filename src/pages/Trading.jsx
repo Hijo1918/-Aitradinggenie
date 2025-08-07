@@ -1,10 +1,10 @@
-import React from 'react'
-import TradingInterface from '../components/trading/TradingInterface'
-import OrderBook from '../components/trading/OrderBook'
-import PositionManager from '../components/trading/PositionManager'
-import RiskManagement from '../components/trading/RiskManagement'
+import React from 'react';
+import TradingInterface from '../components/trading/TradingInterface';
+import OrderBook from '../components/trading/OrderBook';
+import PositionManager from '../components/trading/PositionManager';
+import RiskManagement from '../components/trading/RiskManagement';
 
-const Trading: React.FC = () => {
+const Trading = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -31,7 +31,7 @@ const Trading: React.FC = () => {
 
       <PositionManager />
     </div>
-  )
-}
+  );
+};
 
-export default Trading
+export default Trading;
