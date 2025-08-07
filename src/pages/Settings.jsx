@@ -4,7 +4,7 @@ import TradingSettings from '../components/settings/TradingSettings'
 import NotificationSettings from '../components/settings/NotificationSettings'
 import SecuritySettings from '../components/settings/SecuritySettings'
 
-const Settings: React.FC = () => {
+const Settings = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
