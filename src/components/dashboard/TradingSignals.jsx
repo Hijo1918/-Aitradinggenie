@@ -1,3 +1,5 @@
+Convert to JavaScript 
+
 import React, { useState, useEffect } from 'react'
 import { TrendingUp, TrendingDown, Minus, AlertCircle } from 'lucide-react'
 
