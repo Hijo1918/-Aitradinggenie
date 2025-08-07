@@ -1,10 +1,10 @@
-import React from 'react'
-import ProfitLossChart from '../components/analytics/ProfitLossChart'
-import TradingStats from '../components/analytics/TradingStats'
-import PerformanceBreakdown from '../components/analytics/PerformanceBreakdown'
-import RiskMetrics from '../components/analytics/RiskMetrics'
+import React from 'react';
+import ProfitLossChart from '../components/analytics/ProfitLossChart';
+import TradingStats from '../components/analytics/TradingStats';
+import PerformanceBreakdown from '../components/analytics/PerformanceBreakdown';
+import RiskMetrics from '../components/analytics/RiskMetrics';
 
-const Analytics: React.FC = () => {
+const Analytics = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -28,7 +28,7 @@ const Analytics: React.FC = () => {
 
       <PerformanceBreakdown />
     </div>
-  )
-}
+  );
+};
 
-export default Analytics
+export default Analytics;
