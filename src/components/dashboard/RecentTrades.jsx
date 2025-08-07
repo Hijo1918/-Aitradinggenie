@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { ArrowUpRight, ArrowDownRight, Clock } from 'lucide-react'
+import React, { useState, useEffect } from 'react';
 
-interface Trade {
-  id: string
-  symbol: string
-  side: 'BUY' | 'SELL'
-  amount: number
-  price: number
-  profit: number
-  timestamp: Date
-  status: 'completed' | 'pending' | 'failed'
-}
-
-const RecentTrades: React.FC = () => {
-  const [trades, setTrades] = useState<Trade[]>([])
+const RecentTrades = () => {
+  const [trades, setTrades] = useState([]);
 
   useEffect(() => {
     // Generate mock trades
-    const mockTrades: Trade[] = [
+    const mockTrades = [
       {
         id: '1',
         symbol: 'BTC/USDT',
@@ -58,15 +46,15 @@ const RecentTrades: React.FC = () => {
         timestamp: new Date(Date.now() - 1200000),
         status: 'pending',
       },
-    ]
-    setTrades(mockTrades)
+    ];
+    setTrades(mockTrades);
 
     // Simulate new trades
     const interval = setInterval(() => {
-      const symbols = ['BTC/USDT', 'ETH/USDT', 'ADA/USDT', 'SOL/USDT']
-      const sides: ('BUY' | 'SELL')[] = ['BUY', 'SELL']
-      
-      const newTrade: Trade = {
+      const symbols = ['BTC/USDT', 'ETH/USDT', 'ADA/USDT', 'SOL/USDT'];
+      const sides = ['BUY', 'SELL'];
+
+      const newTrade = {
         id: Date.now().toString(),
         symbol: symbols[Math.floor(Math.random() * symbols.length)],
         side: sides[Math.floor(Math.random() * sides.length)],
@@ -75,43 +63,50 @@ const RecentTrades: React.FC = () => {
         profit: (Math.random() - 0.5) * 200,
         timestamp: new Date(),
         status: 'completed',
-      }
+      };
 
-      setTrades(prev => [newTrade, ...prev.slice(0, 9)])
-    }, 15000)
+      setTrades((prev) => [newTrade, ...prev.slice(0, 9)]);
+    }, 15000);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="card">
+    <div className="card bg-white shadow rounded-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Recent Trades</h3>
-        <Clock className="w-5 h-5 text-gray-400" />
+        <span className="w-5 h-5 text-gray-400">[Clock]</span>
       </div>
 
       <div className="space-y-3">
         {trades.map((trade) => (
-          <div key={trade.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+          <div
+            key={trade.id}
+            className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          >
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-lg ${
-                trade.side === 'BUY' ? 'bg-green-50' : 'bg-red-50'
-              }`}>
-                {trade.side === 'BUY' ? (
-                  <ArrowUpRight className="w-4 h-4 text-green-600" />
-                ) : (
-                  <ArrowDownRight className="w-4 h-4 text-red-600" />
-                )}
+              <div
+                className={`p-2 rounded-lg ${trade.side === 'BUY' ? 'bg-green-50' : 'bg-red-50'}`}
+              >
+                <span
+                  className={`w-4 h-4 ${trade.side === 'BUY' ? 'text-green-600' : 'text-red-600'}`}
+                >
+                  {trade.side === 'BUY' ? '[ArrowUpRight]' : '[ArrowDownRight]'}
+                </span>
               </div>
-              
+
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="font-medium text-gray-900">{trade.symbol}</span>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    trade.status === 'completed' ? 'bg-green-100 text-green-800' :
-                    trade.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
-                  }`}>
+                  <span
+                    className={`text-xs px-2 py-1 rounded ${
+                      trade.status === 'completed'
+                        ? 'bg-green-100 text-green-800'
+                        : trade.status === 'pending'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
                     {trade.status}
                   </span>
                 </div>
@@ -122,9 +117,11 @@ const RecentTrades: React.FC = () => {
             </div>
 
             <div className="text-right">
-              <div className={`font-medium ${
-                trade.profit >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div
+                className={`font-medium ${
+                  trade.profit >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}
+              >
                 {trade.profit >= 0 ? '+' : ''}${trade.profit.toFixed(2)}
               </div>
               <div className="text-xs text-gray-500">
@@ -135,11 +132,9 @@ const RecentTrades: React.FC = () => {
         ))}
       </div>
 
-      <button className="w-full mt-4 btn btn-secondary">
-        View All Trades
-      </button>
+      <button className="w-full mt-4 btn btn-secondary">View All Trades</button>
     </div>
-  )
-}
+  );
+};
 
-export default RecentTrades
+export default RecentTrades;
