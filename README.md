@@ -1,122 +1,77 @@
-# AI Trading Genie
 
-A professional cryptocurrency trading bot platform with AI-powered signals, automated risk management, and real-time analytics.
+# 🧞‍♂️ AI Trading Genie - Serverless Trading Platform
 
-## Features
+A modern serverless trading platform leveraging AI, real-time market data, and smart contract integration.
 
-### 🤖 AI-Powered Trading
-- Advanced machine learning algorithms for market analysis
-- Real-time trading signals with confidence scores
-- Automated trade execution with customizable parameters
+## 🚀 Live
 
-### 📊 Comprehensive Analytics
-- Real-time profit & loss tracking
-- Performance metrics and risk analysis
-- Interactive charts and visualizations
+- **Frontend**: [Live Site](https://your-netlify-site.netlify.app/)
+- **Backend API**: Supabase Edge Functions
+- **Smart Contract**: [0x723625146dD74dBc85b3679104B9fcbCd5a9756b](https://etherscan.io/address/0x723625146dD74dBc85b3679104B9fcbCd5a9756b)
 
-### 🛡️ Risk Management
-- Configurable stop-loss and take-profit levels
-- Position sizing based on risk tolerance
-- Portfolio-wide risk monitoring
+## 📋 Table of Contents
 
-### 🔧 Professional Interface
-- Modern, responsive design
-- Real-time market data integration
-- Comprehensive settings and controls
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Quick Setup](#quick-setup)
+- [Environment Variables](#environment-variables)
+- [Deployment](#deployment)
+- [Smart Contracts](#smart-contracts)
 
-## Technology Stack
+## 🌟 Features
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Charts**: Recharts for data visualization
-- **Icons**: Lucide React
-- **Build Tool**: Vite
-- **Routing**: React Router
+- AI Trading Signals
+- Real-time Market Data
+- Smart Contract Integration
+- Portfolio & Risk Management
+- Secure Auth (Supabase)
+- Responsive Design
 
-## Getting Started
+## 🛠️ Technology Stack
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/ai-trading-genie.git
-   cd ai-trading-genie
-   ```
+- **Frontend**: React, Tailwind CSS
+- **Backend**: Supabase Edge Functions
+- **Blockchain**: Ethereum Smart Contracts
+- **Deployment**: Netlify, Supabase
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+## ⚡ Quick Setup
 
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
+```bash
+git clone https://github.com/YOUR_USERNAME/ai-trading-genie.git
+cd ai-trading-genie
+npm install
+cp .env.example .env
+npm run dev
+```
 
-4. **Build for production**
-   ```bash
-   npm run build
-   ```
+## 🔐 Environment Variables
 
-## Configuration
+### Example `.env`
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your_public_anon_key
+VITE_CONTRACT_ADDRESS=0x723625146dD74dBc85b3679104B9fcbCd5a9756b
+```
 
-### API Settings
-Configure your exchange API credentials in the Settings page:
-- Binance, Coinbase Pro, Kraken, Bybit supported
-- Test mode available for safe development
-- Secure credential storage
+## 🚀 Deployment
 
-### Trading Parameters
-Customize your trading strategy:
-- Risk per trade (0.1% - 10%)
-- Stop loss and take profit levels
-- Maximum open positions
-- Auto-trading toggle
+### Frontend
+- Deploy with Netlify or Vercel
+- Set environment variables
 
-### Risk Management
-Set up comprehensive risk controls:
-- Daily loss limits
-- Portfolio risk monitoring
-- Position size management
-- Drawdown protection
+### Backend
+- Use Supabase dashboard to deploy Edge Functions
+- Enable Row Level Security and manage access
 
-## Security Features
+## 🔒 Smart Contract
 
-- Two-factor authentication support
-- API key restrictions
-- Session timeout controls
-- Security activity logging
-- Withdrawal confirmations
+- **Address**: `0x723625146dD74dBc85b3679104B9fcbCd5a9756b`
+- **Network**: Ethereum
+- Functions:
+  - Deposit/Withdraw
+  - Execute/Settle Trade
+  - Profit Distribution
 
-## Demo Features
+## 📄 License
 
-The demo includes:
-- Simulated real-time price data
-- Mock trading signals
-- Sample trade history
-- Performance analytics
-- Risk metrics
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Disclaimer
-
-This software is for educational and demonstration purposes. Cryptocurrency trading involves substantial risk of loss. Always do your own research and never invest more than you can afford to lose.
-
-## Support
-
-For support and questions:
-- Create an issue on GitHub
-- Check the documentation
-- Join our community discussions
-
----
-
-**⚠️ Important**: This is a demonstration platform. Do not use real API keys or funds without proper testing and understanding of the risks involved.
+MIT License
