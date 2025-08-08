@@ -1,24 +1,23 @@
 [build]
-  publish = "dist"
   command = "npm run build"
+  publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20" # Updated to a newer LTS version (adjust if necessary)
 
-# Redirect all requests to index.html for SPA routing
+# Redirects for Single Page Application (SPA) and API proxy
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# API proxy to Supabase
 [[redirects]]
   from = "/api/*"
   to = "https://qqveojewxoexrwuxrjsk.supabase.co/functions/v1/:splat"
   status = 200
   force = true
 
-# Security headers
+# Security headers for all routes
 [[headers]]
   for = "/*"
   [headers.values]
@@ -26,37 +25,29 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://qqveojewxoexrwuxrjsk.supabase.co wss://qqveojewxoexrwuxrjsk.supabase.co https://mainnet.infura.io https://api.coingecko.com; frame-src 'none';"
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' https://www.googletagmanager.com;
+      style-src 'self' 'unsafe-inline'; # 'unsafe-inline' retained for compatibility, but consider removing if possible
+      img-src 'self' data: https:;
+      font-src 'self' data:;
+      connect-src 'self' https://qqveojewxoexrwuxrjsk.supabase.co wss://qqveojewxoexrwuxrjsk.supabase.co https://mainnet.infura.io https://api.coingecko.com;
+      frame-src 'none';
+    """
 
-# Cache static assets
+# Cache static assets (JS, CSS, fonts)
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/*.js | /assets/*.css | /assets/*.woff2"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Prevent caching of HTML files
 [[headers]]
-  for = "*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Cache fonts
-[[headers]]
-  for = "*.woff2"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Don't cache HTML files
-[[headers]]
-  for = "*.html"
+  for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Environment-specific redirects for development
+# Context-specific build configurations
 [context.deploy-preview]
   command = "npm run build"
 
