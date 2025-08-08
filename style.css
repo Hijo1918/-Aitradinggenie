@@ -1,98 +1,262 @@
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
 }
-
 body {
-  background: #f4f4f4;
-  color: #333;
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  color: #222;
   line-height: 1.6;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #222;
+  background: #121212;
   color: #fff;
   padding: 1rem 2rem;
 }
-
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
 }
-
 .nav-links {
-  display: flex;
   list-style: none;
-  gap: 1.5rem;
+  display: flex;
+  gap: 2rem;
 }
-
 .nav-links a {
   color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
-
 .nav-links a:hover {
-  color: #f9c80e;
+  color: #00c9ff;
 }
 
-#hero {
-  background: linear-gradient(135deg, #6e3ff6, #9f66ff);
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
   color: white;
   text-align: center;
   padding: 4rem 2rem;
 }
-
-#hero h1 {
+.hero h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
-
-#hero button {
-  margin-top: 1rem;
-  padding: 0.7rem 1.5rem;
-  border: none;
-  background-color: #f9c80e;
-  color: #000;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.primary {
+  background-color: #fff;
+  color: #7b2ff7;
+}
+.secondary {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
 }
 
-#hero button:hover {
-  background-color: #ffdf40;
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background: #fff;
+  text-align: center;
+}
+.stat strong {
+  font-size: 1.8rem;
+  display: block;
+  color: #7b2ff7;
+}
+.stat span {
+  font-size: 0.95rem;
+  color: #666;
 }
 
-#about, #features {
+/* Features */
+#features {
   padding: 3rem 2rem;
   text-align: center;
 }
-
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
 }
-
 .feature-card {
-  background: white;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  font-size: 1.1rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  text-align: left;
+}
+.feature-card h3 {
+  color: #7b2ff7;
+  margin-bottom: 0.5rem;
 }
 
-footer {
-  background: #222;
-  color: white;
+/* Testimonials */
+#testimonials {
+  background-color: #f1f3f5;
+  padding: 3rem 2rem;
   text-align: center;
-  padding: 1rem;
+}
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
   margin-top: 2rem;
+}
+.testimonial {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.testimonial strong {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+.testimonial span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Pricing Plans */
+#plans {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.plan-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+  position: relative;
+}
+.plan-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.plan-card span {
+  font-size: 0.8rem;
+  color: #f107a3;
+}
+.plan-card .price {
+  font-size: 2rem;
+  margin: 1rem 0;
+  color: #7b2ff7;
+}
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  text-align: left;
+}
+.plan-card li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+.plan-card button {
+  background-color: #7b2ff7;
+  color: white;
+  margin-top: 1rem;
+  width: 100%;
+}
+.popular {
+  border: 2px solid #f107a3;
+}
+
+/* CTA */
+.cta {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #00c9ff, #92fe9d);
+  text-align: center;
+  color: #000;
+}
+.cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.cta button {
+  margin: 1rem 0.5rem;
+}
+
+/* Footer */
+footer {
+  background: #121212;
+  color: #ccc;
+  padding: 2rem;
+}
+.footer-columns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+footer h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+footer ul {
+  list-style: none;
+}
+footer li {
+  margin: 0.3rem 0;
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* Responsive Text */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .cta h2 {
+    font-size: 1.5rem;
+  }
 }
