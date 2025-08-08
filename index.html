@@ -3,47 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Awesome Styled Website</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>AI Trading Genie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="logo">⭐️Brand</div>
+    <div class="logo">🤖 AI Trading Genie</div>
     <nav>
       <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#plans">Pricing</a></li>
         <li><a href="#footer">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <section id="hero">
-    <h1>Welcome to the Future</h1>
-    <p>Experience blazing-fast, beautifully styled web interfaces.</p>
-    <button onclick="showAlert()">Get Started</button>
-  </section>
-
-  <section id="about">
-    <h2>About Us</h2>
-    <p>We're a creative team passionate about building web magic with HTML, CSS, and JavaScript.</p>
-  </section>
-
-  <section id="features">
-    <h2>Features</h2>
-    <div class="feature-grid">
-      <div class="feature-card">⚡ Fast Performance</div>
-      <div class="feature-card">🎨 Modern Design</div>
-      <div class="feature-card">📱 Responsive Layout</div>
-      <div class="feature-card">🛠️ Easy Customization</div>
+  <section class="hero">
+    <h1>Revolutionize your trading with AI</h1>
+    <p>AI-powered signals, real-time market data, and blockchain-secured profit distribution.</p>
+    <div class="hero-buttons">
+      <button class="primary">Start Trading Now</button>
+      <button class="secondary">Watch Demo</button>
     </div>
   </section>
 
-  <footer id="footer">
-    <p>&copy; 2024 Awesome Styled Website. All rights reserved.</p>
-  </footer>
+  <section class="stats">
+    <div class="stat"><strong>10,051+</strong><span>Active Traders</span></div>
+    <div class="stat"><strong>250,543+</strong><span>Trades Executed</span></div>
+    <div class="stat"><strong>16.3%</strong><span>Avg. Monthly ROI</span></div>
+    <div class="stat"><strong>99.97%</strong><span>Uptime</span></div>
+  </section>
 
-  <script src="script.js"></script>
+  <section id="features">
+    <h2>Powerful Features for Modern Traders</h2>
+    <p class="subtitle">Everything you need to succeed in cryptocurrency trading, powered by cutting-edge AI and blockchain technology.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>AI-Powered Trading Signals</h3>
+        <p>Machine learning algorithms provide high-confidence signals with 85%+ accuracy.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Real-Time Market Data</h3>
+        <p>Live crypto prices, order books & market insights from top exchanges.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Smart Contract Security</h3>
+        <p>Audited blockchain smart contracts for transparent profit distribution.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Portfolio Management</h3>
+        <p>Track your portfolio with risk tools and automated position sizing.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Mobile-First Design</h3>
+        <p>Trade on the go with a fully responsive, mobile-optimized platform.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Enterprise Security</h3>
+        <p>Bank-grade encryption, MFA, and secure APIs protect your data.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Trusted by Thousands of Traders</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>"AI Trading Genie has revolutionized my trading strategy. The signals are incredibly accurate and the platform is intuitive."</p>
+        <strong>Sarah Chen</strong><span>Professional Trader</span>
+      </div>
+      <div class="testimonial">
+        <p>"The smart contract integration gives me confidence that my profits are secure and transparent. Amazing platform!"</p>
+        <strong>Michael Rodriguez</strong><span>Crypto Investor</span>
+      </div>
+      <div class="testimonial">
+        <p>"Real-time market data and AI signals have increased my trading success rate by over 40%. Highly recommended!"</p>
+        <strong>Emily Johnson</strong><span>Day Trader</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="plans">
+    <h2>Choose Your Trading Plan</h2>
+    <p class="subtitle">Start free, upgrade when you're ready to scale</p>
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <h3>Starter</h3>
+        <p class="price">$29<span>/month</span></p>
+        <ul>
+          <li>5 AI Trading Signals/day</li>
+          <li>Basic Portfolio Tracking</li>
+          <li>Mobile App Access</li>
+          <li>Email Support</li>
+          <li>Risk Management Tools</li>
+        </ul>
+        <button>Get Started</button>
+      </div>
+      <div class="plan-card popular">
+        <h3>Professional <span>Most Popular</span></h3>
+        <p class="price">$79<span>/month</span></p>
+        <ul>
+          <li>Unlimited AI Signals</li>
+          <li>Advanced Analytics</li>
+          <li>Smart Contract Integration</li>
+          <li>Priority Support</li>
+          <li>Custom Risk Settings</li>
+          <li>API Access</li>
+        </ul>
+        <button>Get Started</button>
+      </div>
+      <div class="plan-card">
+        <h3>Enterprise</h3>
+        <p class="price">$199<span>/month</span></p>
+        <ul>
+          <li>Everything in Professional</li>
+          <li>White-label Solution</li>
+          <li>Dedicated Account Manager</li>
+          <li>Custom Integrations</li>
+          <li>Advanced Reporting</li>
+          <li>SLA Guarantee</li>
+        </ul>
+        <button>Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Ready to Transform Your Trading?</h2>
+    <p>Join thousands of successful traders using AI Trading Genie to maximize their profits.</p>
+    <button class="primary">Start Free Trial</button>
+    <button class="secondary">Schedule Demo</button>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-columns">
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li>Trading Signals</li>
+          <li>Market Data</li>
+          <li>Portfolio</li>
+          <li>Smart Contracts</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li>Documentation</li>
+          <li>API Reference</li>
+          <li>Help Center</li>
+          <li>Contact Us</li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2024 AI Trading Genie. All rights reserved.</p>
+  </footer>
 </body>
 </html>
