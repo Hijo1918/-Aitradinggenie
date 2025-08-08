@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['/src/main.jsx'], // Explicitly add your module here
+      external: ['/assets/index-be91bb73.js']
     }
   }
-})
+});
