@@ -11,3 +11,5 @@
 
  const Trading: React.FC = () => {
    return (
+   )
+ }
