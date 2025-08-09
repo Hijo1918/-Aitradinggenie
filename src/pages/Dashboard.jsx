@@ -11,6 +11,7 @@ import QuickActions from '../components/QuickActions';
 import PortfolioOverview from '../components/PortfolioOverview';
 import MarketData from '../components/MarketData';
 import SmartContractInterface from '../components/SmartContractInterface';
+import EthereumBlockViewer from '../components/EthereumBlockViewer';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -35,6 +36,9 @@ const Dashboard = () => {
 
       {/* Quick Actions */}
       <QuickActions />
+
+      {/* Ethereum Block Viewer */}
+      <EthereumBlockViewer />
 
       {/* Portfolio Overview and Stats Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
@@ -74,13 +78,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-import EthereumBlockViewer from '../components/EthereumBlockViewer';
-
-export default function Dashboard() {
-  return (
-    <div>
-      {/* ...your existing dashboard content... */}
-      <EthereumBlockViewer />
-    </div>
-  );
-}
