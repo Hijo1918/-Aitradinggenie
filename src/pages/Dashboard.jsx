@@ -74,3 +74,13 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+import EthereumBlockViewer from '../components/EthereumBlockViewer';
+
+export default function Dashboard() {
+  return (
+    <div>
+      {/* ...your existing dashboard content... */}
+      <EthereumBlockViewer />
+    </div>
+  );
+}
