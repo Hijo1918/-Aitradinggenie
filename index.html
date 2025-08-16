@@ -196,6 +196,7 @@
     <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
     <script>
         // Theme toggle
@@ -219,17 +220,19 @@
         fetchLivePrice();
         setInterval(fetchLivePrice, 5000);
 
-        // Firebase config (replace with your own)
+        // Firebase config
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MSG_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBDAmnEmGH4X5S4Bjc5a_RHJW4JEzXsyaI",
+            authDomain: "new-build-2f07b.firebaseapp.com",
+            projectId: "new-build-2f07b",
+            storageBucket: "new-build-2f07b.firebasestorage.app",
+            messagingSenderId: "563726728973",
+            appId: "1:563726728973:web:5a1da92dd326fc53b07a44",
+            measurementId: "G-9YFHCLPLL6"
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const analytics = firebase.analytics();
 
         // Login/Signup toggle
         const loginForm = document.getElementById('login-form');
