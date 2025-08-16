@@ -3,14 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AITradingGenie - Revolutionary AI Trading Platform</title>
+    <title>AITradingGenie - AI-Powered Trading</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Added Chart.js -->
+    <style>
+        /* Modal Styles */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 50; 
+        }
+        .modal form { 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 10px; 
+            width: 300px; 
+            max-width: 90%; 
+        }
+        .modal input { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 4px; 
+            border: 1px solid #ccc; 
+        }
+        .modal button { 
+            width: 100%; 
+            padding: 10px; 
+            background: #4CAF50; 
+            color: #fff; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+        .modal button:hover { background: #45a049; }
+        .error { 
+            color: red; 
+            font-size: 0.875rem; 
+            margin-top: 5px; 
+        }
+    </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <!-- Theme Toggle -->
-    <button id="theme-toggle" class="fixed top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+    <button id="theme-toggle" class="fixed top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full" aria-label="Toggle dark mode">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707
@@ -25,13 +67,12 @@
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white">AITradingGenie</h1>
             <ul class="flex space-x-6 text-white">
-                <li><a href="#home" class="hover:underline">Home</a></li>
-                <li><a href="#features" class="hover:underline">Features</a></li>
-                <li><a href="#about" class="hover:underline">About</a></li>
-                <li><a href="#pricing" class="hover:underline">Pricing</a></li>
-                <li><a href="#education" class="hover:underline">Education</a></li>
-                <li><a href="#community" class="hover:underline">Community</a></li>
-                <li><a href="#contact" class="hover:underline">Contact</a></li>
+                <li><a href="#home" class="hover:underline smooth-scroll">Home</a></li>
+                <li><a href="#features" class="hover:underline smooth-scroll">Features</a></li>
+                <li><a href="#about" class="hover:underline smooth-scroll">About</a></li>
+                <li><a href="#pricing" class="hover:underline smooth-scroll">Pricing</a></li>
+                <li><a href="#contact" class="hover:underline smooth-scroll">Contact</a></li>
+                <li><button id="nav-login-btn" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400">Login</button></li>
             </ul>
         </div>
     </nav>
@@ -41,33 +82,36 @@
         <h2 class="text-2xl font-bold mb-2">Live BTC/USD Price</h2>
         <p id="live-price" class="text-4xl font-mono text-blue-700 dark:text-blue-300">Loading...</p>
         <small id="last-updated" class="text-gray-600 dark:text-gray-400">Last updated: --</small>
+        <div class="mt-6 max-w-2xl mx-auto">
+            <canvas id="btcChart"></canvas>
+        </div>
     </section>
 
     <!-- Hero Section -->
     <section id="home" class="py-20 bg-blue-800 text-white text-center">
         <div class="container mx-auto">
-            <h2 class="text-4xl md:text-6xl font-bold mb-4">Revolutionary Trading with AITradingGenie</h2>
-            <p class="text-lg md:text-xl mb-6">Experience the ultimate AI-powered trading platform combining crypto and traditional markets with advanced analytics, portfolio management, and community-driven insights.</p>
-            <a href="#pricing" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg hover:bg-yellow-400">Get Started</a>
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Trade Smarter with AITradingGenie</h2>
+            <p class="text-lg md:text-xl mb-6">Harness the power of AI to make informed trading decisions.</p>
+            <button id="hero-login-btn" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg hover:bg-yellow-400">Get Started</button>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="py-16">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-8">Powerful Trading Features</h2>
+            <h2 class="text-3xl font-bold mb-8">Features</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">AI-Powered Trading Signals</h3>
-                    <p>Receive accurate buy/sell recommendations for both cryptocurrency and traditional markets, powered by advanced AI algorithms.</p>
+                    <h3 class="text-xl font-semibold mb-2">AI Predictions</h3>
+                    <p>Advanced algorithms analyze market trends in real-time.</p>
                 </div>
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Advanced Portfolio Management</h3>
-                    <p>Optimize your investments with personalized portfolio strategies, risk management, and automated rebalancing tools.</p>
+                    <h3 class="text-xl font-semibold mb-2">Portfolio Management</h3>
+                    <p>Optimize your investments with automated tools.</p>
                 </div>
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Real-Time Market Data</h3>
-                    <p>Access live market data, news, charts, and technical indicators to make informed trading decisions across all asset classes.</p>
+                    <h3 class="text-xl font-semibold mb-2">Real-Time Alerts</h3>
+                    <p>Get instant notifications on market opportunities.</p>
                 </div>
             </div>
         </div>
@@ -77,49 +121,7 @@
     <section id="about" class="py-16 bg-gray-200 dark:bg-gray-700">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">About AITradingGenie</h2>
-            <p class="text-lg max-w-2xl mx-auto">AITradingGenie is a revolutionary trading platform that seamlessly integrates AI-powered signals, advanced portfolio management, and support for both crypto and traditional markets. With real-time analytics, educational resources, and a vibrant community, we empower traders to succeed in dynamic financial markets.</p>
-        </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" class="py-16">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-8">Education & Training</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Video Lessons</h3>
-                    <p>Learn trading strategies through comprehensive video tutorials tailored for beginners and experts.</p>
-                </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Live Webinars</h3>
-                    <p>Join expert-led webinars to stay updated on market trends and advanced trading techniques.</p>
-                </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Interactive Quizzes</h3>
-                    <p>Test your trading knowledge with quizzes designed to reinforce learning and boost confidence.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Community Section -->
-    <section id="community" class="py-16 bg-gray-200 dark:bg-gray-700">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-8">Join Our Trading Community</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Community Forums</h3>
-                    <p>Engage with fellow traders, share strategies, and discuss market trends in our active forums.</p>
-                </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Leaderboards</h3>
-                    <p>Compete with top traders and showcase your skills on our global leaderboards.</p>
-                </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Discussion Boards</h3>
-                    <p>Participate in topic-specific discussions to gain insights and collaborate with the community.</p>
-                </div>
-            </div>
+            <p class="text-lg max-w-2xl mx-auto">AITradingGenie leverages cutting-edge AI to empower traders with data-driven insights, helping you stay ahead in the financial markets.</p>
         </div>
     </section>
 
@@ -131,19 +133,19 @@
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                     <h3 class="text-xl font-semibold mb-2">Basic</h3>
                     <p class="text-2xl font-bold mb-4">$9.99/mo</p>
-                    <p>AI trading signals, real-time data, and access to community forums.</p>
+                    <p>Access to AI predictions and basic alerts.</p>
                     <a href="#" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Choose Plan</a>
                 </div>
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                     <h3 class="text-xl font-semibold mb-2">Pro</h3>
                     <p class="text-2xl font-bold mb-4">$29.99/mo</p>
-                    <p>Full AI suite, advanced portfolio management, and exclusive webinars.</p>
+                    <p>Full AI suite with portfolio management.</p>
                     <a href="#" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Choose Plan</a>
                 </div>
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                     <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
                     <p class="text-2xl font-bold mb-4">Custom</p>
-                    <p>Tailored solutions with premium support for large teams and institutions.</p>
+                    <p>Tailored solutions for large teams.</p>
                     <a href="#contact" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Contact Us</a>
                 </div>
             </div>
@@ -154,286 +156,183 @@
     <section id="contact" class="py-16 bg-gray-200 dark:bg-gray-700">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
-            <form class="max-w-lg mx-auto">
-                <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded-lg">
-                <input type="email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg">
-                <textarea placeholder="Message" class="w-full p-3 mb-4 rounded-lg h-32"></textarea>
+            <form class="max-w-lg mx-auto" aria-label="Contact form">
+                <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded-lg" aria-label="Name" required>
+                <input type="email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg" aria-label="Email" required>
+                <textarea placeholder="Message" class="w-full p-3 mb-4 rounded-lg h-32" aria-label="Message" required></textarea>
                 <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500">Send</button>
             </form>
         </div>
     </section>
-
-    <!-- Firebase Auth / Login Section -->
-    <div class="container mx-auto my-16 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md">
-        <div id="login-form">
-            <h2 class="text-2xl font-bold mb-4">Login</h2>
-            <input type="email" id="login-email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg">
-            <input type="password" id="login-password" placeholder="Password" class="w-full p-3 mb-4 rounded-lg">
-            <button id="login-btn" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-500">Login</button>
-            <p class="mt-2">Don't have an account? <a id="show-signup" class="text-blue-600 cursor-pointer hover:underline">Sign Up</a></p>
-        </div>
-
-        <div id="signup-form" style="display: none;">
-            <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
-            <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg">
-            <input type="password" id="signup-password" placeholder="Password" class="w-full p-3 mb-4 rounded-lg">
-            <button id="signup-btn" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-500">Sign Up</button>
-            <p class="mt-2">Already have an account? <a id="show-login" class="text-blue-600 cursor-pointer hover:underline">Login</a></p>
-        </div>
-
-        <div id="dashboard" style="display: none;">
-            <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
-            <p>Welcome, <span id="user-email"></span></p>
-            <button id="logout-btn" class="mt-4 bg-red-600 text-white p-3 rounded-lg hover:bg-red-500">Logout</button>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="bg-blue-600 text-white p-4 text-center">
         <p>&copy; 2025 AITradingGenie. All rights reserved.</p>
     </footer>
 
-    <script>
-// =======================
-// Theme toggle
-// =======================
-const themeToggle = document.getElementById('theme-toggle');
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-  });
-}
-
-// =======================
-// Live BTC price
-// =======================
-async function fetchLivePrice() {
-  try {
-    const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
-    const data = await response.json();
-    const price = data.bpi.USD.rate_float.toFixed(2);
-    document.getElementById('live-price').textContent = `$${price}`;
-    document.getElementById('last-updated').textContent =
-      `Last updated: ${new Date().toLocaleTimeString()}`;
-  } catch (err) {
-    document.getElementById('live-price').textContent = 'Error loading price';
-    console.error('Error fetching BTC price:', err);
-  }
-}
-fetchLivePrice();
-setInterval(fetchLivePrice, 5000);
-
-// =======================
-// Firebase config
-// =======================
-const firebaseConfig = {
-  apiKey: "AIzaSyBDAmnEmGH4X5S4Bjc5a_RHJW4JEzXsyaI",
-  authDomain: "new-build-2f07b.firebaseapp.com",
-  projectId: "new-build-2f07b",
-  storageBucket: "new-build-2f07b.firebasestorage.app",
-  messagingSenderId: "563726728973",
-  appId: "1:563726728973:web:5a1da92dd326fc53b07a44",
-  measurementId: "G-9YFHCLPLL6"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-let analytics;
-try {
-  analytics = firebase.analytics();
-} catch (e) {
-  console.warn("Firebase analytics not available in this setup.");
-}
-
-// =======================
-// Elements
-// =======================
-const loginForm = document.getElementById('login-form');
-const signupForm = document.getElementById('signup-form');
-const dashboard = document.getElementById('dashboard');
-const userEmailSpan = document.getElementById('user-email');
-const loginBtn = document.getElementById('login-btn');
-const signupBtn = document.getElementById('signup-btn');
-const logoutBtn = document.getElementById('logout-btn');
-const showSignup = document.getElementById('show-signup');
-const showLogin = document.getElementById('show-login');
-
-// Sections that require authentication
-const featureSections = document.querySelectorAll('#features, #education, #community');
-const restrictedMessage = `
-  <div class="text-center p-6 bg-red-100 dark:bg-red-900 
-              text-red-700 dark:text-red-300">
-    Please log in to access this feature.
-  </div>`;
-
-// =======================
-// Toggle login/signup
-// =======================
-showSignup.addEventListener('click', () => {
-  loginForm.style.display = 'none';
-  signupForm.style.display = 'block';
-  if (analytics) analytics.logEvent('view_signup_form');
-});
-
-showLogin.addEventListener('click', () => {
-  signupForm.style.display = 'none';
-  loginForm.style.display = 'block';
-  if (analytics) analytics.logEvent('view_login_form');
-});
-
-// =======================
-// Error helper
-// =======================
-function showError(elementId, message) {
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'text-red-500 mt-2';
-  errorDiv.textContent = message;
-  const form = document.getElementById(elementId);
-  form.appendChild(errorDiv);
-  setTimeout(() => errorDiv.remove(), 3000);
-}
-
-// =======================
-// Signup
-// =======================
-signupBtn.addEventListener('click', () => {
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-
-  if (!email || !password) {
-    showError('signup-form', 'Please enter both email and password.');
-    return;
-  }
-  if (password.length < 6) {
-    showError('signup-form', 'Password must be at least 6 characters.');
-    return;
-  }
-
-  signupBtn.disabled = true;
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      if (analytics) analytics.logEvent('sign_up', { method: 'email' });
-      showDashboard(userCredential.user);
-    })
-    .catch(err => {
-      showError('signup-form', err.message);
-      signupBtn.disabled = false;
-    });
-});
-
-// =======================
-// Login
-// =======================
-loginBtn.addEventListener('click', () => {
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-
-  if (!email || !password) {
-    showError('login-form', 'Please enter both email and password.');
-    return;
-  }
-
-  loginBtn.disabled = true;
-  auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      if (analytics) analytics.logEvent('login', { method: 'email' });
-      showDashboard(userCredential.user);
-    })
-    .catch(err => {
-      showError('login-form', err.message);
-      loginBtn.disabled = false;
-    });
-});
-
-// =======================
-// Logout
-// =======================
-logoutBtn.addEventListener('click', () => {
-  auth.signOut()
-    .then(() => {
-      if (analytics) analytics.logEvent('logout');
-      dashboard.style.display = 'none';
-      loginForm.style.display = 'block';
-      restrictFeatures();
-    })
-    .catch(err => {
-      showError('dashboard', 'Error logging out: ' + err.message);
-    });
-});
-
-// =======================
-// Show dashboard
-// =======================
-function showDashboard(user) {
-  loginForm.style.display = 'none';
-  signupForm.style.display = 'none';
-  dashboard.style.display = 'block';
-
-  dashboard.innerHTML = `
-    <h2 class="text-2xl font-bold">Welcome, <span id="user-email">${user.email}</span></h2>
-    <div class="mt-4">
-      <h3 class="text-xl font-semibold mb-2">Your Trading Dashboard</h3>
-      <p>Access AI-powered trading signals, portfolio management, and community features below.</p>
-      <div class="grid grid-cols-1 gap-4 mt-4">
-        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-          <h4 class="font-semibold">AI Trading Signals</h4>
-          <p>Latest signal: 
-            <span class="text-green-500">
-              Buy BTC/USD at ${document.getElementById('live-price').textContent}
-            </span>
-          </p>
-        </div>
-        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-          <h4 class="font-semibold">Portfolio Overview</h4>
-          <p>Current balance: $10,000 (Mock data)</p>
-        </div>
-        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-          <h4 class="font-semibold">Community Activity</h4>
-          <p>Join the latest discussion on market trends!</p>
-          <a href="#community" class="text-blue-600 hover:underline">Go to Community</a>
-        </div>
-      </div>
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal flex">
+        <form id="loginForm" aria-label="Login form">
+            <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+            <input type="email" id="login-email" placeholder="Email" required aria-label="Email">
+            <input type="password" id="login-password" placeholder="Password" required aria-label="Password">
+            <p id="login-error" class="error hidden">Invalid email or password</p>
+            <button type="submit">Login</button>
+            <p class="mt-4 text-center text-gray-600">
+                Don't have an account? 
+                <button type="button" id="show-signup" class="text-blue-600 hover:underline">Sign Up</button>
+            </p>
+        </form>
     </div>
-  `;
 
-  // Restore features
-  featureSections.forEach(section => {
-    section.style.display = 'block';
-    section.classList.remove('opacity-50', 'pointer-events-none');
-    if (section.querySelector('.restricted-msg')) {
-      section.querySelector('.restricted-msg').remove();
-    }
-  });
-}
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal flex">
+        <form id="signupForm" aria-label="Sign up form">
+            <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+            <input type="text" id="signup-name" placeholder="Name" required aria-label="Name">
+            <input type="email" id="signup-email" placeholder="Email" required aria-label="Email">
+            <input type="password" id="signup-password" placeholder="Password" required aria-label="Password">
+            <p id="signup-error" class="error hidden">Please fill all fields correctly</p>
+            <button type="submit">Sign Up</button>
+            <p class="mt-4 text-center text-gray-600">
+                Already have an account? 
+                <button type="button" id="show-login" class="text-blue-600 hover:underline">Login</button>
+            </p>
+        </form>
+    </div>
 
-// =======================
-// Restrict features
-// =======================
-function restrictFeatures() {
-  featureSections.forEach(section => {
-    section.style.display = 'block';
-    section.classList.add('opacity-50', 'pointer-events-none');
-    if (!section.querySelector('.restricted-msg')) {
-      section.insertAdjacentHTML('beforeend',
-        `<div class="restricted-msg">${restrictedMessage}</div>`);
-    }
-  });
-}
+    <!-- Scripts -->
+    <script>
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
 
-// =======================
-// Auth state listener
-// =======================
-auth.onAuthStateChanged(user => {
-  if (user) {
-    showDashboard(user);
-  } else {
-    dashboard.style.display = 'none';
-    loginForm.style.display = 'block';
-    signupForm.style.display = 'none';
-    restrictFeatures();
-  }
-});
-</script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
 
-       <script src="script.js"></script>
+        // Modal handling
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const navLoginBtn = document.getElementById('nav-login-btn');
+        const heroLoginBtn = document.getElementById('hero-login-btn');
+        const showSignupBtn = document.getElementById('show-signup');
+        const showLoginBtn = document.getElementById('show-login');
+
+        navLoginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
+        heroLoginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
+        showSignupBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+        showLoginBtn.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+
+        // Close modals on outside click
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+        });
+        signupModal.addEventListener('click', (e) => {
+            if (e.target === signupModal) signupModal.style.display = 'none';
+        });
+
+        // Login form submit
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const error = document.getElementById('login-error');
+            if (email && password.length >= 6) {
+                alert('Logged in as ' + email);
+                this.reset();
+                loginModal.style.display = 'none';
+                error.classList.add('hidden');
+            } else {
+                error.classList.remove('hidden');
+            }
+        });
+
+        // Signup form submit
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const error = document.getElementById('signup-error');
+            if (name && email && password.length >= 6) {
+                alert('Signed up as ' + email);
+                this.reset();
+                signupModal.style.display = 'none';
+                error.classList.add('hidden');
+            } else {
+                error.classList.remove('hidden');
+            }
+        });
+
+        // Live BTC/USD price
+        async function fetchLivePrice() {
+            try {
+                const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
+                const data = await response.json();
+                const price = data.bpi.USD.rate_float.toFixed(2);
+                document.getElementById('live-price').textContent = `$${price}`;
+                document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                return price;
+            } catch (err) {
+                document.getElementById('live-price').textContent = 'Error loading price';
+                return null;
+            }
+        }
+        fetchLivePrice();
+        setInterval(fetchLivePrice, 5000);
+
+        // BTC Price Chart
+        const btcChart = new Chart(document.getElementById('btcChart'), {
+            type: 'line',
+            data: {
+                labels: [], // Will be populated dynamically
+                datasets: [{
+                    label: 'BTC/USD Price',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Price (USD)' } }
+                }
+            }
+        });
+
+        // Update chart with mock data (for demo purposes)
+        async function updateChart() {
+            const price = await fetchLivePrice();
+            if (price) {
+                const now = new Date().toLocaleTimeString();
+                btcChart.data.labels.push(now);
+                btcChart.data.datasets[0].data.push(price);
+                if (btcChart.data.labels.length > 10) {
+                    btcChart.data.labels.shift();
+                    btcChart.data.datasets[0].data.shift();
+                }
+                btcChart.update();
+            }
+        }
+        updateChart();
+        setInterval(updateChart, 5000);
+    </script>
 </body>
-</html> 
+</html>
