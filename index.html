@@ -4,50 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AITradingGenie - AI-Powered Trading</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="public/output.css" rel="stylesheet">
+    <link href="src/components/Modal.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Modal Styles - Reusable Component */
-        .modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.5); 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 50; 
-        }
-        .modal form { 
-            background: #fff; 
-            padding: 30px; 
-            border-radius: 10px; 
-            width: 300px; 
-            max-width: 90%; 
-        }
-        .modal input { 
-            width: 100%; 
-            padding: 10px; 
-            margin: 10px 0; 
-            border-radius: 4px; 
-            border: 1px solid #ccc; 
-        }
-        .modal button { 
-            width: 100%; 
-            padding: 10px; 
-            background: #4CAF50; 
-            color: #fff; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-        }
-        .modal button:hover { background: #45a049; }
-        .error { 
-            color: red; 
-            font-size: 0.875rem; 
-            margin-top: 5px; 
-        }
-    </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
@@ -177,39 +136,20 @@
         <p>&copy; 2025 AITradingGenie. All rights reserved.</p>
     </footer>
 
-    <!-- Login Modal (Reusable Component from src/components) -->
-    <div id="login-modal" class="modal flex">
-        <form id="loginForm" aria-label="Login form">
-            <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
-            <input type="email" id="login-email" placeholder="Email" required aria-label="Email">
-            <input type="password" id="login-password" placeholder="Password" required aria-label="Password">
-            <p id="login-error" class="error hidden">Invalid email or password</p>
-            <button type="submit">Login</button>
-            <p class="mt-4 text-center text-gray-600">
-                Don't have an account? 
-                <button type="button" id="show-signup" class="text-blue-600 hover:underline">Sign Up</button>
-            </p>
-        </form>
-    </div>
-
-    <!-- Signup Modal (Reusable Component from src/components) -->
-    <div id="signup-modal" class="modal flex">
-        <form id="signupForm" aria-label="Sign up form">
-            <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
-            <input type="text" id="signup-name" placeholder="Name" required aria-label="Name">
-            <input type="email" id="signup-email" placeholder="Email" required aria-label="Email">
-            <input type="password" id="signup-password" placeholder="Password" required aria-label="Password">
-            <p id="signup-error" class="error hidden">Please fill all fields correctly</p>
-            <button type="submit">Sign Up</button>
-            <p class="mt-4 text-center text-gray-600">
-                Already have an account? 
-                <button type="button" id="show-login" class="text-blue-600 hover:underline">Login</button>
-            </p>
-        </form>
-    </div>
+    <!-- Login and Signup Modals -->
+    <div id="login-modal-container"></div>
+    <div id="signup-modal-container"></div>
 
     <!-- Scripts -->
-    <script>
+    <script type="module">
+        // Import modal components
+        import { LoginModal } from './src/components/LoginModal.js';
+        import { SignupModal } from './src/components/SignupModal.js';
+
+        // Inject modals into the DOM
+        document.getElementById('login-modal-container').innerHTML = LoginModal();
+        document.getElementById('signup-modal-container').innerHTML = SignupModal();
+
         // Theme toggle
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.body.classList.toggle('dark');
