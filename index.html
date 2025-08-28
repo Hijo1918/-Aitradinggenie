@@ -13,7 +13,7 @@
 
     <!-- Theme Toggle Button -->
     <button id="theme-toggle" class="fixed top-6 right-6 z-50 p-2 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-full shadow hover:ring-2 hover:ring-blue-400 transition duration-200" aria-label="Toggle Theme">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707
                    M6.343 6.343l-.707-.707m12.728 0l-.707.707
@@ -25,7 +25,7 @@
     <!-- Navigation Bar (branding only) -->
     <nav class="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 shadow sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl md:text-3xl font-extrabold text-white tracking-wide">AITradingGenie</a>
+            <span class="text-2xl md:text-3xl font-extrabold text-white tracking-wide">AITradingGenie</span>
         </div>
     </nav>
 
@@ -46,10 +46,10 @@
     <!-- Signup/Login Modal -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg w-full max-w-md p-8 relative">
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 dark:hover:text-white text-2xl">&times;</button>
+            <button id="close-modal" type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 dark:hover:text-white text-2xl">&times;</button>
             <div id="auth-tabs" class="flex mb-8">
-                <button id="signup-tab" class="flex-1 py-2 font-bold border-b-2 border-blue-600 dark:border-yellow-300 text-blue-600 dark:text-yellow-300 bg-transparent">Sign Up</button>
-                <button id="login-tab" class="flex-1 py-2 font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 bg-transparent">Login</button>
+                <button id="signup-tab" type="button" class="flex-1 py-2 font-bold border-b-2 border-blue-600 dark:border-yellow-300 text-blue-600 dark:text-yellow-300 bg-transparent">Sign Up</button>
+                <button id="login-tab" type="button" class="flex-1 py-2 font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 bg-transparent">Login</button>
             </div>
             <!-- Signup Form -->
             <form id="signup-form" class="space-y-6">
@@ -191,10 +191,10 @@
     <section id="contact" class="py-20 bg-blue-50 dark:bg-blue-950">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8 text-blue-700 dark:text-yellow-300">Contact Us</h2>
-            <form class="max-w-lg mx-auto space-y-6">
-                <input type="text" placeholder="Name" class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
-                <input type="email" placeholder="Email" class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
-                <textarea placeholder="Message" class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"></textarea>
+            <form id="contact-form" class="max-w-lg mx-auto space-y-6">
+                <input type="text" name="name" placeholder="Name" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                <input type="email" name="email" placeholder="Email" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                <textarea name="message" placeholder="Message" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"></textarea>
                 <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-blue-700 transition">Send Message</button>
             </form>
         </div>
@@ -236,6 +236,8 @@
         getStartedBtn.addEventListener('click', function(e) {
             e.preventDefault();
             authModal.classList.remove('hidden');
+            // Default to signup tab
+            signupTab.click();
         });
         closeModal.addEventListener('click', function() {
             authModal.classList.add('hidden');
@@ -280,6 +282,7 @@
         async function fetchLivePrice() {
             try {
                 const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                if (!response.ok) throw new Error('Failed to fetch');
                 const data = await response.json();
                 const price = parseFloat(data.bitcoin.usd).toFixed(2);
                 const priceEl = document.getElementById('live-price');
@@ -308,7 +311,7 @@
         setInterval(fetchLivePrice, 5000);
 
         // Contact form handler (demo only)
-        document.querySelector('section#contact form').addEventListener('submit', function(e) {
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert("Thank you for contacting us!");
             this.reset();
