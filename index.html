@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AITradingGenie - AI-Powered Trading</title>
     <link href="public/output.css" rel="stylesheet">
-    <link href="src/components/Modal.css" rel="stylesheet">
+    <link href="public/styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <!-- Theme Toggle -->
-    <button id="theme-toggle" class="fixed top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full" aria-label="Toggle dark mode">
+    <button id="theme-toggle" class="fixed top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full z-50" aria-label="Toggle dark mode">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707
@@ -22,7 +23,7 @@
     </button>
 
     <!-- Navigation -->
-    <nav class="bg-blue-600 p-4 sticky top-0 z-10">
+    <nav class="bg-blue-600 p-4 sticky top-0 z-10 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white">AITradingGenie</h1>
             <ul class="flex space-x-6 text-white">
@@ -31,13 +32,17 @@
                 <li><a href="#about" class="hover:underline smooth-scroll">About</a></li>
                 <li><a href="#pricing" class="hover:underline smooth-scroll">Pricing</a></li>
                 <li><a href="#contact" class="hover:underline smooth-scroll">Contact</a></li>
-                <li><button id="nav-login-btn" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400">Login</button></li>
+                <li>
+                    <button id="nav-login-btn" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 transition">
+                        Login
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
 
     <!-- Live Data Section -->
-    <section class="py-8 bg-yellow-100 dark:bg-yellow-900 text-center">
+    <section class="py-8 bg-yellow-100 dark:bg-yellow-900 text-center shadow-lg">
         <h2 class="text-2xl font-bold mb-2">Live BTC/USD Price</h2>
         <p id="live-price" class="text-4xl font-mono text-blue-700 dark:text-blue-300">Loading...</p>
         <small id="last-updated" class="text-gray-600 dark:text-gray-400">Last updated: --</small>
@@ -47,11 +52,13 @@
     </section>
 
     <!-- Hero Section -->
-    <section id="home" class="py-20 bg-blue-800 text-white text-center">
+    <section id="home" class="py-20 bg-blue-800 text-white text-center shadow-lg">
         <div class="container mx-auto">
             <h2 class="text-4xl md:text-6xl font-bold mb-4">Trade Smarter with AITradingGenie</h2>
             <p class="text-lg md:text-xl mb-6">Harness the power of AI to make informed trading decisions.</p>
-            <button id="hero-login-btn" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg hover:bg-yellow-400">Get Started</button>
+            <button id="hero-login-btn" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg hover:bg-yellow-400 transition font-bold text-lg">
+                Get Started
+            </button>
         </div>
     </section>
 
@@ -60,15 +67,15 @@
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">Features</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">AI Predictions</h3>
                     <p>Advanced algorithms analyze market trends in real-time.</p>
                 </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">Portfolio Management</h3>
                     <p>Optimize your investments with automated tools.</p>
                 </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">Real-Time Alerts</h3>
                     <p>Get instant notifications on market opportunities.</p>
                 </div>
@@ -77,7 +84,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-gray-200 dark:bg-gray-700">
+    <section id="about" class="py-16 bg-gray-200 dark:bg-gray-700 shadow-lg">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">About AITradingGenie</h2>
             <p class="text-lg max-w-2xl mx-auto">AITradingGenie leverages cutting-edge AI to empower traders with data-driven insights, helping you stay ahead in the financial markets.</p>
@@ -89,79 +96,105 @@
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">Pricing Plans</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">Basic</h3>
                     <p class="text-2xl font-bold mb-4">$9.99/mo</p>
                     <p>Access to AI predictions and basic alerts.</p>
-                    <a href="#" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Choose Plan</a>
+                    <a href="#" id="choose-basic" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">Choose Plan</a>
                 </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">Pro</h3>
                     <p class="text-2xl font-bold mb-4">$29.99/mo</p>
                     <p>Full AI suite with portfolio management.</p>
-                    <a href="#" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Choose Plan</a>
+                    <a href="#" id="choose-pro" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">Choose Plan</a>
                 </div>
-                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
                     <p class="text-2xl font-bold mb-4">Custom</p>
                     <p>Tailored solutions for large teams.</p>
-                    <a href="#contact" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Contact Us</a>
+                    <a href="#contact" class="block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition smooth-scroll">Contact Us</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-200 dark:bg-gray-700">
+    <section id="contact" class="py-16 bg-gray-200 dark:bg-gray-700 shadow-lg">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
             <form class="max-w-lg mx-auto" aria-label="Contact form">
                 <input type="text" placeholder="Name" class="w-full p-3 mb-4 rounded-lg" aria-label="Name" required>
                 <input type="email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg" aria-label="Email" required>
                 <textarea placeholder="Message" class="w-full p-3 mb-4 rounded-lg h-32" aria-label="Message" required></textarea>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500">Send</button>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500 transition">Send</button>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white p-4 text-center">
-        <ul class="flex justify-center space-x-6 mb-4">
+    <!-- Footer with navigation and file explorer -->
+    <footer class="bg-blue-600 text-white p-4 text-center shadow-inner">
+        <ul class="flex flex-wrap justify-center space-x-6 mb-4">
             <li><a href="#home" class="hover:underline smooth-scroll">Home</a></li>
             <li><a href="#features" class="hover:underline smooth-scroll">Features</a></li>
             <li><a href="#about" class="hover:underline smooth-scroll">About</a></li>
             <li><a href="#pricing" class="hover:underline smooth-scroll">Pricing</a></li>
             <li><a href="#contact" class="hover:underline smooth-scroll">Contact</a></li>
+            <li><button id="footer-login-btn" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 ml-4 transition">Login</button></li>
+            <li><button id="footer-signup-btn" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-400 transition">Sign Up</button></li>
         </ul>
-        <p>&copy; 2025 AITradingGenie. All rights reserved.</p>
+        <div id="repo-file-list" class="mt-6 text-left max-w-4xl mx-auto p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-auto" style="max-height: 300px;">
+            <h3 class="text-xl font-bold mb-2 text-blue-700 dark:text-blue-300">Repository Files</h3>
+            <div id="file-explorer"></div>
+        </div>
+        <p class="mt-4">&copy; 2025 AITradingGenie. All rights reserved.</p>
     </footer>
 
     <!-- Login and Signup Modals -->
-    <div id="login-modal-container"></div>
-    <div id="signup-modal-container"></div>
+    <div id="login-modal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex-col items-center justify-center hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-auto relative flex flex-col items-center">
+            <button id="close-login" class="absolute top-2 right-2 text-gray-600 dark:text-gray-300 text-xl font-bold">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Login</h2>
+            <form id="loginForm" class="w-full">
+                <input type="email" id="login-email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg" required>
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-3 mb-4 rounded-lg" required minlength="6">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500 w-full mb-2 transition">Login</button>
+                <div id="login-error" class="text-red-500 text-sm hidden"></div>
+            </form>
+            <p class="mt-4">Don't have an account? <button id="show-signup" class="text-blue-600 underline">Sign Up</button></p>
+        </div>
+    </div>
+    <div id="signup-modal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex-col items-center justify-center hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-auto relative flex flex-col items-center">
+            <button id="close-signup" class="absolute top-2 right-2 text-gray-600 dark:text-gray-300 text-xl font-bold">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
+            <form id="signupForm" class="w-full">
+                <input type="text" id="signup-name" placeholder="Name" class="w-full p-3 mb-4 rounded-lg" required>
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 mb-4 rounded-lg" required>
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-3 mb-4 rounded-lg" required minlength="6">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500 w-full mb-2 transition">Sign Up</button>
+                <div id="signup-error" class="text-red-500 text-sm hidden"></div>
+            </form>
+            <p class="mt-4">Already have an account? <button id="show-login" class="text-blue-600 underline">Login</button></p>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script type="module">
-        // Import modal components
-        import { LoginModal } from './src/components/LoginModal.js';
-        import { SignupModal } from './src/components/SignupModal.js';
+        // === Supabase configuration ===
+        const SUPABASE_URL = "YOUR_SUPABASE_URL"; // <-- Replace with your Supabase project URL
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY"; // <-- Replace with your Supabase anon/public key
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Inject modals into the DOM
-        document.getElementById('login-modal-container').innerHTML = LoginModal();
-        document.getElementById('signup-modal-container').innerHTML = SignupModal();
-
-        // Theme toggle
+        // === Theme toggle ===
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         });
-
-        // Load theme from localStorage
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark');
         }
 
-        // Smooth scroll for navigation and footer links
+        // === Smooth scroll for navigation and footer links ===
         document.querySelectorAll('.smooth-scroll').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -173,16 +206,31 @@
             });
         });
 
-        // Modal handling
+        // === Modal handling ===
         const loginModal = document.getElementById('login-modal');
         const signupModal = document.getElementById('signup-modal');
         const navLoginBtn = document.getElementById('nav-login-btn');
         const heroLoginBtn = document.getElementById('hero-login-btn');
+        const footerLoginBtn = document.getElementById('footer-login-btn');
+        const footerSignupBtn = document.getElementById('footer-signup-btn');
         const showSignupBtn = document.getElementById('show-signup');
         const showLoginBtn = document.getElementById('show-login');
+        const closeLoginBtn = document.getElementById('close-login');
+        const closeSignupBtn = document.getElementById('close-signup');
+        const chooseBasic = document.getElementById('choose-basic');
+        const choosePro = document.getElementById('choose-pro');
 
+        // Show Login Modal
         navLoginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
         heroLoginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
+        footerLoginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
+
+        // Show Signup Modal
+        footerSignupBtn.addEventListener('click', () => signupModal.style.display = 'flex');
+        chooseBasic.addEventListener('click', (e) => { e.preventDefault(); signupModal.style.display = 'flex'; });
+        choosePro.addEventListener('click', (e) => { e.preventDefault(); signupModal.style.display = 'flex'; });
+
+        // Toggle between modals
         showSignupBtn.addEventListener('click', () => {
             loginModal.style.display = 'none';
             signupModal.style.display = 'flex';
@@ -192,6 +240,9 @@
             loginModal.style.display = 'flex';
         });
 
+        closeLoginBtn.addEventListener('click', () => loginModal.style.display = 'none');
+        closeSignupBtn.addEventListener('click', () => signupModal.style.display = 'none');
+
         // Close modals on outside click
         loginModal.addEventListener('click', (e) => {
             if (e.target === loginModal) loginModal.style.display = 'none';
@@ -200,48 +251,83 @@
             if (e.target === signupModal) signupModal.style.display = 'none';
         });
 
-        // Login form submit
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
+        // === Login form submit ===
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const error = document.getElementById('login-error');
             if (email && password.length >= 6) {
-                alert('Logged in as ' + email);
-                this.reset();
-                loginModal.style.display = 'none';
-                error.classList.add('hidden');
+                // Supabase login
+                try {
+                    const { data, error: supaError } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+                    if (supaError) {
+                        error.textContent = supaError.message;
+                        error.classList.remove('hidden');
+                    } else {
+                        alert('Logged in as ' + email);
+                        this.reset();
+                        loginModal.style.display = 'none';
+                        error.classList.add('hidden');
+                    }
+                } catch (err) {
+                    error.textContent = 'Login failed. Please try again.';
+                    error.classList.remove('hidden');
+                }
             } else {
                 error.textContent = 'Please enter a valid email and a password with at least 6 characters.';
                 error.classList.remove('hidden');
             }
         });
 
-        // Signup form submit
-        document.getElementById('signupForm').addEventListener('submit', function (e) {
+        // === Signup form submit ===
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const error = document.getElementById('signup-error');
             if (name && email && password.length >= 6) {
-                alert('Signed up as ' + email);
-                this.reset();
-                signupModal.style.display = 'none';
-                error.classList.add('hidden');
+                // Supabase signup
+                try {
+                    const { data, error: supaError } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: { name }
+                        }
+                    });
+                    if (supaError) {
+                        error.textContent = supaError.message;
+                        error.classList.remove('hidden');
+                    } else {
+                        // Optionally, insert user data into public 'users' table
+                        await supabase.from('users').insert([{ name, email }]);
+                        alert('Signed up as ' + email);
+                        this.reset();
+                        signupModal.style.display = 'none';
+                        error.classList.add('hidden');
+                    }
+                } catch (err) {
+                    error.textContent = 'Signup failed. Please try again.';
+                    error.classList.remove('hidden');
+                }
             } else {
                 error.textContent = 'Please fill all fields correctly (password must be at least 6 characters).';
                 error.classList.remove('hidden');
             }
         });
 
-        // Live BTC/USD price with enhanced error handling
+        // === Live BTC/USD price with enhanced error handling ===
         async function fetchLivePrice() {
             try {
-                const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
+                const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
-                const price = data.bpi.USD.rate_float.toFixed(2);
+                const price = data.bpi.USD.rate_float ? data.bpi.USD.rate_float.toFixed(2) : data.bpi.USD.rate.replace(/,/g, '');
                 document.getElementById('live-price').textContent = `$${price}`;
                 document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
                 return price;
@@ -255,7 +341,7 @@
         fetchLivePrice();
         setInterval(fetchLivePrice, 5000);
 
-        // BTC Price Chart
+        // === BTC Price Chart ===
         const btcChart = new Chart(document.getElementById('btcChart'), {
             type: 'line',
             data: {
@@ -294,6 +380,87 @@
         }
         updateChart();
         setInterval(updateChart, 5000);
+
+        // === Load all repo files ===
+        async function fetchRepoFiles() {
+            // Replace with your repo name and owner
+            const repoOwner = "Hijo1918";
+            const repoName = "YOUR_REPO_NAME"; // <-- Update with your repo name
+            // Use GitHub's REST API to get repo tree (You may need a backend endpoint or proxy for private repos)
+            const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=1`;
+            try {
+                const res = await fetch(apiUrl);
+                if (!res.ok) throw new Error("Could not fetch repo files");
+                const data = await res.json();
+                const files = data.tree.map(f => f.path);
+                // Filter for requested folders/files
+                const filtered = files.filter(f => 
+                    f.startsWith("src/components") ||
+                    f.startsWith("src/lib") ||
+                    f.startsWith("src/pages") ||
+                    f.startsWith("public/") ||
+                    !f.includes("/")
+                );
+                displayRepoFiles(filtered);
+            } catch (err) {
+                document.getElementById("file-explorer").innerHTML = `<div class="text-red-500">Could not load repo files.</div>`;
+            }
+        }
+
+        function displayRepoFiles(files) {
+            const container = document.getElementById("file-explorer");
+            container.innerHTML = "";
+            files.forEach(file => {
+                const btn = document.createElement("button");
+                btn.textContent = file;
+                btn.className = "block mb-2 px-3 py-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 w-full text-left transition";
+                btn.addEventListener("click", () => showFileContent(file));
+                container.appendChild(btn);
+            });
+        }
+
+        async function showFileContent(file) {
+            const repoOwner = "Hijo1918";
+            const repoName = "YOUR_REPO_NAME"; // <-- Update with your repo name
+            const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${file}`;
+            try {
+                const res = await fetch(apiUrl);
+                if (!res.ok) throw new Error("Could not fetch file content");
+                const data = await res.json();
+                let content = atob(data.content);
+                const ext = file.split(".").pop();
+                let codeClass = "language-txt";
+                if (ext === "js") codeClass = "language-js";
+                if (ext === "css") codeClass = "language-css";
+                if (ext === "html") codeClass = "language-html";
+                // Show in modal, or below list
+                const container = document.getElementById("file-explorer");
+                let fileModal = document.getElementById("file-content-modal");
+                if (!fileModal) {
+                    fileModal = document.createElement("div");
+                    fileModal.id = "file-content-modal";
+                    fileModal.className = "fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center z-50";
+                    fileModal.innerHTML = `
+                        <div class="bg-white dark:bg-gray-900 p-6 rounded-lg max-w-3xl w-full relative">
+                            <button id="close-file-modal" class="absolute top-2 right-2 text-xl font-bold text-gray-600 dark:text-gray-300">&times;</button>
+                            <h3 class="text-lg font-bold mb-2">${file}</h3>
+                            <pre class="p-3 bg-gray-100 dark:bg-gray-800 rounded overflow-auto text-xs max-h-96"><code class="${codeClass}">${content.replace(/</g, "&lt;")}</code></pre>
+                        </div>
+                    `;
+                    document.body.appendChild(fileModal);
+                    document.getElementById("close-file-modal").onclick = () => fileModal.remove();
+                } else {
+                    fileModal.querySelector("h3").textContent = file;
+                    fileModal.querySelector("code").textContent = content;
+                    fileModal.style.display = "flex";
+                }
+            } catch (err) {
+                alert("Could not load file content.");
+            }
+        }
+
+        fetchRepoFiles();
+
     </script>
 </body>
 </html>
