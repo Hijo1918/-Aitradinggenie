@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Supabase JS client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 relative">
 
@@ -40,6 +42,7 @@
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6 drop-shadow">Trade Smarter with <span class="text-yellow-400">AI</span></h1>
             <p class="text-lg md:text-2xl mb-8 max-w-2xl mx-auto">Harness advanced AI for real-time crypto trading insights, portfolio management, and instant alerts.</p>
             <a id="get-started-btn" href="#" class="inline-block bg-yellow-400 text-blue-900 px-8 py-4 rounded-full font-bold text-xl shadow hover:bg-yellow-300 transition">Get Started</a>
+            <div id="user-info" class="mt-6"></div>
         </div>
     </section>
 
@@ -57,12 +60,14 @@
                 <input type="email" id="signup-email" placeholder="Email" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
                 <input type="password" id="signup-password" placeholder="Password" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
                 <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-blue-700 transition">Create Account</button>
+                <div id="signup-error" class="text-red-500 text-sm hidden"></div>
             </form>
             <!-- Login Form -->
             <form id="login-form" class="space-y-6 hidden">
                 <input type="email" id="login-email" placeholder="Email" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
                 <input type="password" id="login-password" placeholder="Password" required class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
                 <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow hover:bg-blue-700 transition">Login</button>
+                <div id="login-error" class="text-red-500 text-sm hidden"></div>
             </form>
         </div>
     </div>
@@ -214,6 +219,11 @@
 
     <!-- Scripts -->
     <script>
+        // === Supabase config ===
+        const SUPABASE_URL = "YOUR_SUPABASE_URL"; https://qqveojewxoexrwuxrjsk.supabase.co
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY"; eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxdmVvamV3eG9leHJ3dXhyanNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4OTYzNjgsImV4cCI6MjA2NzQ3MjM2OH0.PP3wurQzyAM9DQQTOnYrAgEtcSW-jJCalMYNy7a1XgQ
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         // Theme toggle logic
         document.getElementById('theme-toggle').addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
@@ -232,11 +242,13 @@
         const loginTab = document.getElementById('login-tab');
         const signupForm = document.getElementById('signup-form');
         const loginForm = document.getElementById('login-form');
+        const signupError = document.getElementById('signup-error');
+        const loginError = document.getElementById('login-error');
+        const userInfo = document.getElementById('user-info');
 
         getStartedBtn.addEventListener('click', function(e) {
             e.preventDefault();
             authModal.classList.remove('hidden');
-            // Default to signup tab
             signupTab.click();
         });
         closeModal.addEventListener('click', function() {
@@ -261,20 +273,91 @@
             loginForm.classList.remove('hidden');
         });
 
-        // Demo Signup Form Handler
-        signupForm.addEventListener('submit', function(e){
-            e.preventDefault();
-            alert('Account created! Welcome, ' + document.getElementById('signup-name').value);
-            signupForm.reset();
-            authModal.classList.add('hidden');
+        // Show logged in user info
+        async function showUserInfo(session) {
+            if (session && session.user) {
+                userInfo.innerHTML = `
+                    <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full inline-block font-bold text-sm">
+                        Logged in as ${session.user.email}
+                        <button id="logout-btn" class="ml-3 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 font-bold text-xs">Logout</button>
+                    </div>
+                `;
+                document.getElementById('logout-btn').onclick = async function () {
+                    await supabase.auth.signOut();
+                    userInfo.innerHTML = '';
+                };
+            } else {
+                userInfo.innerHTML = '';
+            }
+        }
+
+        // Supabase session check
+        supabase.auth.onAuthStateChange((_event, session) => {
+            showUserInfo(session);
         });
 
-        // Demo Login Form Handler
-        loginForm.addEventListener('submit', function(e){
+        // Signup Form Handler - Supabase integration
+        signupForm.addEventListener('submit', async function(e){
             e.preventDefault();
-            alert('Welcome back, ' + document.getElementById('login-email').value);
-            loginForm.reset();
-            authModal.classList.add('hidden');
+            signupError.classList.add('hidden');
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            if (name && email && password.length >= 6) {
+                try {
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: { name }
+                        }
+                    });
+                    if (error) {
+                        signupError.textContent = error.message;
+                        signupError.classList.remove('hidden');
+                    } else {
+                        signupForm.reset();
+                        authModal.classList.add('hidden');
+                        showUserInfo({ user: { email } });
+                    }
+                } catch (err) {
+                    signupError.textContent = 'Sign up failed. Please try again.';
+                    signupError.classList.remove('hidden');
+                }
+            } else {
+                signupError.textContent = 'Please fill all fields correctly (password must be at least 6 characters).';
+                signupError.classList.remove('hidden');
+            }
+        });
+
+        // Login Form Handler - Supabase integration
+        loginForm.addEventListener('submit', async function(e){
+            e.preventDefault();
+            loginError.classList.add('hidden');
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            if (email && password.length >= 6) {
+                try {
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+                    if (error) {
+                        loginError.textContent = error.message;
+                        loginError.classList.remove('hidden');
+                    } else {
+                        loginForm.reset();
+                        authModal.classList.add('hidden');
+                        showUserInfo(data.session);
+                    }
+                } catch (err) {
+                    loginError.textContent = 'Login failed. Please try again.';
+                    loginError.classList.remove('hidden');
+                }
+            } else {
+                loginError.textContent = 'Please enter a valid email and a password with at least 6 characters.';
+                loginError.classList.remove('hidden');
+            }
         });
 
         // Live BTC Price with change indicator (using CoinGecko API for reliability)
